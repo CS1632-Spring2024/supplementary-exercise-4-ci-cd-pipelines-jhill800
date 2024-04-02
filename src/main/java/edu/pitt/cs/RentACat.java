@@ -1,7 +1,6 @@
 package edu.pitt.cs;
 
 import org.mockito.Mockito;
-import static org.mockito.Mockito.*; 
 
 public interface RentACat {
 	public static RentACat createInstance(InstanceType type) {
@@ -13,8 +12,12 @@ public interface RentACat {
 			case SOLUTION:
 				return new RentACatSolution();
 			case MOCK:
-				// TODO: Return a mock object that emulates the behavior of a real object.
-				return null;
+				RentACat rentACat = Mockito.mock(RentACat.class);
+				Mockito.when(rentACat.listCats()).thenReturn("ID 1. Testcat /nID 2. Testcat2");
+				Mockito.when(rentACat.returnCat(1)).thenReturn(true);
+				Mockito.when(rentACat.rentCat(1)).thenReturn(true);
+				Mockito.when(rentACat.renameCat(1, "renamedCat")).thenReturn(true);
+				return rentACat;
 			default:
 				assert (false);
 				return null;

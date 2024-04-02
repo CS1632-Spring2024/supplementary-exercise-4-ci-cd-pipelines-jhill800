@@ -18,11 +18,22 @@ public class RentACatImpl implements RentACat {
 	 */
 
 	public boolean returnCat(int id) {
-		// TODO: Fill in
-		return false;
+		boolean wasRented = false;
+		for (Cat cat : cats){
+			if(cat.getId() == id){
+				wasRented = cat.getRented();
+				if(!wasRented){
+					System.out.println(cat.getName()+" is already here!");
+					return wasRented;
+				}
+				cat.returnCat();
+				System.out.println("Welcome back, "+cat.getName()+"!");
+			}
+		}
+		return wasRented;
 	}
 
-	/**
+	/*
 	 * Rent a cat. This should call the .rentCat() method on the cat for the
 	 * passed-in cat id. If the cat with the id exists in the list of cats and has
 	 * *not* been rented out, then this method should return true after calling
@@ -33,7 +44,17 @@ public class RentACatImpl implements RentACat {
 	 */
 
 	public boolean rentCat(int id) {
-		// TODO: Fill in
+		boolean wasRented;
+		for (Cat cat : cats){
+			if(cat.getId() == id){
+				wasRented = cat.getRented();
+				cat.rentCat();
+				if(wasRented){
+					System.out.println("Sorry, "+cat.getName()+" is not here!");
+				}
+				return !wasRented;
+			}
+		}
 		return false;
 	}
 
@@ -47,7 +68,13 @@ public class RentACatImpl implements RentACat {
 	 */
 
 	public boolean renameCat(int id, String name) {
-		// TODO: Fill in
+		for (Cat cat : cats){
+			if(cat.getId() == id){
+				cat.renameCat(name);
+				return true;
+			}
+		}
+		getCat(id);
 		return false;
 	}
 
@@ -62,8 +89,13 @@ public class RentACatImpl implements RentACat {
 	 */
 
 	public String listCats() {
-		// TODO: Fill in
-		return "WRITE CODE FOR THIS";
+		String result = "";
+		for (Cat cat : cats){
+			if (!cat.getRented()){
+				result += (cat.toString() + "\n");
+			}
+		}
+		return result;
 	}
 
 	/**
